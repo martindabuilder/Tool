@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    background-image: url('BG.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -10;
+}
+
+.logo_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+.logo_center img {
+    width: 70%; 
+}
+</style>
+</head>
+<body>
+
+<div class="background"></div>
+
+<div class="logo_center">
+    <img src="logo.png" alt="Logo">
+</div>
+
+</body>
+</html>
