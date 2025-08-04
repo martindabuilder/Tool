@@ -3,6 +3,7 @@
 <head>
 <style>
 html, body {
+    background-color: rgb(0, 0, 0);
     margin: 0;
     height: 100%;
 }
@@ -16,14 +17,35 @@ html, body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    z-index: -10;
+    z-index: 1;
 }
 
 .logo_center {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
+    height: 100vh;
+    z-index: 2;
+    position: relative;
+}
+
+.fade_in {
+    animation: fade_animation 1s ease-in forwards;
+}
+@keyframes fade_animation {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.logo_fade {
+    opacity: 0;
+    animation: fade_logo_frame 2s ease-in;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+@keyframes fade_logo_frame {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 .logo_center img {
@@ -33,11 +55,15 @@ html, body {
 </head>
 <body>
 
-<div class="background"></div>
 
-<div class="logo_center">
-    <img src="logo.png" alt="Logo">
+<div class="fade_in">
+    <div class="background"></div>
+
+    <div class="logo_center logo_fade">
+        <img src="logo.png" alt="Logo">
+    </div>
 </div>
+
 
 </body>
 </html>
