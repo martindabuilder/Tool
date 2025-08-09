@@ -64,7 +64,7 @@ html, body {
     margin-right: auto;
 }
 
-.logo_fade {
+.logo_fade_in {
     opacity: 0;
     animation: fade_logo_frame 1.2s ease-in;
     animation-delay: 0.2s;
@@ -72,7 +72,7 @@ html, body {
 }
 @keyframes fade_logo_frame {
     from { opacity: 0; }
-    to { opacity: 1; }
+    to { opacity: 0.7; }
 }
 
 .logo_center img {
@@ -80,27 +80,29 @@ html, body {
     filter: drop-shadow(0 0 10px #c8d1d9);
 }
 
-.song_names {
-    offset: 10px;
-    z-index: 2;
-    font: 'Copperplate Gothic Light', monospace;
-    font-size: 1.5em;
+.album_content {
+    display: flex;   
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+}
 
-    display: flex;
-    flex-direction: column;
+.album_art {
+    flex: 0 0 auto;
+    max-width: 300px; 
 }
 
 .album_art img {
-    width: 100%;
-    max-width: 300px;
+    width: 100%; 
     height: auto;
     border-radius: 10px;
 }
 
-.album_content {
-display: flex;   
-gap: 20px;
-padding: 15px;
+.song_names {
+    flex: 1;
+    font-family: 'Copperplate Gothic Light', monospace;
+    font-size: 1.5em;
+    padding-left: 15px;
 }
 
 </style>
@@ -110,30 +112,29 @@ padding: 15px;
     <div class = "black_gradient"></div>
     <div class="background"></div>
 
-    <div class="logo_center logo_fade">
+    <div class="logo_center logo_fade_in">
         <img src="logo.png" alt="Logo">
     </div>
 </div>
 
 <div class = "album_content"> 
-<div class = "album_art">
+    <div class = "album_art">
     <img src = "albumcover.png">
-</div>
+    </div>
 
-<div class="song_names">
+    <div class="song_names">
     <p>1. Vicarious</p>
-    <p>2. Jambi</p>
-    <p>3.Wings For Marie(Pt 1)</p>
-    4. 10,000 Days(Wings Pt 2)
-    5. The Pot
-    6. Lipan Conjuring
-    7. Lost Keys (Blame Hofman)
-    8. Rosetta Stoned
-    9. Intension
-    10. Right in Two
-    <p>11. Viginti Tires</p>
-</div>
-
+        <p>2. Jambi</p>
+        <p>3. Wings For Marie (Pt 1)</p>
+        <p>4. 10,000 Days (Wings Pt 2)</p>
+        <p>5. The Pot</p>
+        <p>6. Lipan Conjuring</p>
+        <p>7. Lost Keys (Blame Hofman)</p>
+        <p>8. Rosetta Stoned</p>
+        <p>9. Intension</p>
+        <p>10. Right in Two</p>
+        <p>11. Viginti Tires</p>
+    </div>
 </div>
 
 <script>
@@ -145,7 +146,7 @@ window.addEventListener('scroll', function () {
     const blur = Math.min((scrollY / fadeEnd) * maxBlur, maxBlur);
     const opacity = Math.max(1 - (scrollY / fadeEnd), 0);
 
-    const bg = document.querySelector('.background');
+    const bg = document.querySelector('.background', 'logo.png');
     bg.style.filter = `blur(${blur}px)`;
     bg.style.opacity = opacity;
 });
