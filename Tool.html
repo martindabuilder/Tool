@@ -80,29 +80,43 @@ html, body {
     filter: drop-shadow(0 0 10px #c8d1d9);
 }
 
+
+/*album content*/
 .album_content {
-    display: flex;   
-    gap: 20px;
-    padding: 20px;
-    align-items: flex-start;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 30px;
+    min-height: 100vh; 
+    padding: 50px 0; 
 }
-
 .album_art {
-    flex: 0 0 auto;
-    max-width: 300px; 
+    max-width: 500px; 
+    transform:transform(-50%, -50%);
 }
-
 .album_art img {
-    width: 100%; 
+    width: 150%; 
     height: auto;
     border-radius: 10px;
+    transition: transform 0.5s ease;
+    box-shadow: 0px 0px 24px 24px rgb(17, 1, 41);
+}
+.move {
+    transform: translate(-530px);
 }
 
 .song_names {
-    flex: 1;
     font-family: 'Copperplate Gothic Light', monospace;
     font-size: 1.5em;
-    padding-left: 15px;
+    opacity: 0;
+    transition: opacity 0.75s ease;
+}
+.showsongs{
+    opacity: 1;
+}
+
+.cd {
+    width: auto;
 }
 
 </style>
@@ -119,11 +133,11 @@ html, body {
 
 <div class = "album_content"> 
     <div class = "album_art">
-    <img src = "albumcover.png">
+        <img src = "albumcover.png" id = "cover" onclick="movecover()">
     </div>
 
-    <div class="song_names">
-    <p>1. Vicarious</p>
+    <div class="song_names" id = "songs">
+        <p>1. Vicarious</p>
         <p>2. Jambi</p>
         <p>3. Wings For Marie (Pt 1)</p>
         <p>4. 10,000 Days (Wings Pt 2)</p>
@@ -135,9 +149,11 @@ html, body {
         <p>10. Right in Two</p>
         <p>11. Viginti Tires</p>
     </div>
+
 </div>
 
 <script>
+/*scroll fade*/
 window.addEventListener('scroll', function () {
     const scrollY = window.scrollY;
     const maxBlur = 10;
@@ -150,7 +166,18 @@ window.addEventListener('scroll', function () {
     bg.style.filter = `blur(${blur}px)`;
     bg.style.opacity = opacity;
 });
+
+
+function movecover() {
+    var image = document.getElementById("cover");
+    var songs = document.getElementById("songs");
+    image.classList.toggle("move");
+    songs.classList.toggle("showsongs");
+}
+
+
 </script>
+
 
 </body>
 </html>
