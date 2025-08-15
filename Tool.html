@@ -80,29 +80,47 @@ html, body {
     filter: drop-shadow(0 0 10px #c8d1d9);
 }
 
-
-/*album content*/
 .album_content {
-    display: flex;
+    margin-top: 100vh;
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; 
     justify-content: center; 
     align-items: center;
-    gap: 30px;
-    min-height: 100vh; 
-    padding: 50px 0; 
+    min-height: 100vh;  
+    width: 100%;
 }
+
 .album_art {
-    max-width: 500px; 
-    transform:transform(-50%, -50%);
+    max-width: 350px; 
 }
+
 .album_art img {
-    width: 150%; 
+    width: 100%; 
     height: auto;
-    border-radius: 10px;
-    transition: transform 0.5s ease;
-    box-shadow: 0px 0px 24px 24px rgb(17, 1, 41);
+    transition: transform 0.5s ease; 
+    z-index: 10;
 }
 .move {
-    transform: translate(-530px);
+    transform: translate(-500px);
+}
+
+.cd {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140%; 
+    height: auto;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 1; 
+    transform-origin: center center;
+}
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .song_names {
@@ -113,10 +131,6 @@ html, body {
 }
 .showsongs{
     opacity: 1;
-}
-
-.cd {
-    width: auto;
 }
 
 </style>
@@ -136,6 +150,11 @@ html, body {
         <img src = "albumcover.png" id = "cover" onclick="movecover()">
     </div>
 
+    
+</div>
+
+<img src = "disk.png">
+<!--
     <div class="song_names" id = "songs">
         <p>1. Vicarious</p>
         <p>2. Jambi</p>
@@ -149,8 +168,8 @@ html, body {
         <p>10. Right in Two</p>
         <p>11. Viginti Tires</p>
     </div>
+-->
 
-</div>
 
 <script>
 /*scroll fade*/
@@ -174,8 +193,6 @@ function movecover() {
     image.classList.toggle("move");
     songs.classList.toggle("showsongs");
 }
-
-
 </script>
 
 
