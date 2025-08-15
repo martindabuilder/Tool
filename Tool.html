@@ -79,10 +79,11 @@ html, body {
 }
 
 .album_content {
-    margin-top: 50vh;
+    margin-top: 30vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100vw;
 }
 
 .album_art {
@@ -105,17 +106,12 @@ html, body {
     left: 50%;
     width: 140%; 
     height: auto;
-    transform: translate(-50%, -50%);
     border-radius: 50%;
     z-index: 1; 
-    transform-origin: center center;
-}
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
 
 .song_names {
+    width: 50%;
     font-family: 'Copperplate Gothic Light', monospace;
     font-size: 1.5em;
     opacity: 0;
@@ -159,8 +155,6 @@ html, body {
 </div>
 
 <img src = "disk.png">
-
-
 <script>
 /*scroll fade*/
 window.addEventListener('scroll', function () {
