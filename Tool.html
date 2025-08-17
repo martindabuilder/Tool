@@ -7,7 +7,6 @@ html, body {
     background-color: rgb(0, 0, 0);
     margin: 0;
     height: 100%;
-    color: white;
 }
 
 .top_section {
@@ -16,7 +15,6 @@ html, body {
     overflow: hidden;
     z-index: 1;
 }
-
 .black_gradient {
     height: 100%;
     width: 100%;
@@ -25,7 +23,6 @@ html, body {
     position: absolute;
     z-index: 2;
 }
-
 .background {
     width: 100%;
     height: 100%;
@@ -40,8 +37,19 @@ html, body {
     z-index: 1;
 }
 
+.albumtitle {
+    color: rgb(226, 227, 242); 
+    font-family: 'Copperplate Gothic Light', monospace;
+    font-size: 3.0em;
+    opacity: 0.75;
+    transition: opacity 0.75s ease;
+    text-align: center;
+    z-index: 2;
+    filter: drop-shadow(0 0 10px #c8d1d9);
+}
 .logo_center {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -61,7 +69,6 @@ html, body {
     width: auto;
     height: auto;
 }
-
 .logo_fade_in {
     opacity: 0;
     animation: fade_logo_frame 1.2s ease-in;
@@ -72,74 +79,121 @@ html, body {
     from { opacity: 0; }
     to { opacity: 0.7; }
 }
-
 .logo_center img {
     width: 70%;
     filter: drop-shadow(0 0 10px #c8d1d9);
 }
 
+.coverartfade {
+    opacity: 0;
+    animation: fade_cover 1.2s ease-in;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+@keyframes fade_cover{
+    from { opacity: 0;}
+    to {opacity: 100;}
+}
+
+/* album container centered */
 .album_content {
-    margin-top: 30vh;
+    margin-top: 0vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    height: 100vh;
 }
 
 .album_art {
     max-width: 350px; 
 }
 
-.album_art img {
+/* holographic effect on album art */
+.holographiccover {
+    width: 100%;
+    height: auto;
+    background: rgb(4, 2, 58);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    transition: all 0.6s ease-out;
+}
+.holographiccover img {
     width: 110%; 
     height: auto;
-    transition: transform 0.5s ease; 
-    z-index: 10;
+    z-index: 2;
 }
-.move {
+.holographiccover::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      0deg,
+      transparent,
+      transparent 30%,
+      rgb(56, 56, 84)
+      );
+    transform: rotate(-45deg);
+    transition: all 0.8s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+.holographiccover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgb(61, 59, 98);
+}
+.holographiccover:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
+}
+.holographiccover.move {
     transform: translate(-500px);
 }
 
-.cd {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 140%; 
-    height: auto;
-    border-radius: 50%;
-    z-index: 1; 
-}
-
+/* song names (hidden for now) */
 .song_names {
-    width: 50%;
+    color: rgb(170, 173, 201);
     font-family: 'Copperplate Gothic Light', monospace;
     font-size: 1.5em;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.75s ease;
-    text-align: center;
+    text-align: left;
 }
-.showsongs{
+.showsongs {
     opacity: 1;
 }
 
 </style>
 </head>
 
+<body>
+
 <div class="top_section fade_in">
-    <div class = "black_gradient"></div>
+    <div class="black_gradient"></div>
     <div class="background"></div>
 
     <div class="logo_center logo_fade_in">
         <img src="logo.png" alt="Logo">
+        <div class = "albumtitle">
+            <p1>10,000 Days</p1>
+        </div>
     </div>
+
 </div>
 
-<div class = "album_content"> 
-    <div class = "album_art">
-        <img src = "albumcover.png" id = "cover" onclick="movecover()">
-    </div>
 
-    <div class="song_names" id = "songs">
+<div class="album_content"> 
+    <div class="album_art">
+        <div class="holographiccover" id="coverholo" "coverartfade" onclick="movecover()">
+            <img src="albumcover.png" alt="Album Cover">
+        </div>
+    </div>
+    
+    <div class="song_names" id="songs">
         <p>1. Vicarious</p>
         <p>2. Jambi</p>
         <p>3. Wings For Marie (Pt 1)</p>
@@ -152,10 +206,9 @@ html, body {
         <p>10. Right in Two</p>
         <p>11. Viginti Tires</p>
     </div>
-    
+
 </div>
 
-<img src = "disk.png">
 <script>
 /*scroll fade*/
 window.addEventListener('scroll', function () {
@@ -166,20 +219,18 @@ window.addEventListener('scroll', function () {
     const blur = Math.min((scrollY / fadeEnd) * maxBlur, maxBlur);
     const opacity = Math.max(1 - (scrollY / fadeEnd), 0);
 
-    const bg = document.querySelector('.background', 'logo.png');
+    const bg = document.querySelector('.background');
     bg.style.filter = `blur(${blur}px)`;
     bg.style.opacity = opacity;
 });
 
-
 function movecover() {
-    var image = document.getElementById("cover");
+    var wrapper = document.getElementById("coverholo");
     var songs = document.getElementById("songs");
-    image.classList.toggle("move");
-    songs.classList.toggle("showsongs");
+    wrapper.classList.toggle("move");
+    if (songs) songs.classList.toggle("showsongs");
 }
 </script>
-
 
 </body>
 </html>
