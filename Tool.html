@@ -15,6 +15,18 @@ html, body {
     overflow: hidden;
     z-index: 1;
 }
+.mid_section{
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    background-color: rgb(2, 2, 33);
+}
+.bottom_section{
+    height: 50vh;
+    background-color: rgb(240, 12, 12);
+}
+
 .black_gradient {
     height: 100%;
     width: 100%;
@@ -192,31 +204,35 @@ html, body {
 </div>
 
 <!-- midsection -->
-<div class="album_content"> 
-    <div class="album_art albumfade">
-        <div class="holographiccover" id="coverholo" onclick="movecover()">
+<div class = "mid_section">
+    <div class="album_content"> 
+        <div class="album_art albumfade">
+            <div class="holographiccover" id="coverholo" onclick="movecover()">
             <img src="albumcover.png" alt="Album Cover" id ="cover">
+            </div>
         </div>
-    </div>
     
-    <div class="song_names" id="songs">
-        <p>1. Vicarious</p>
-        <p>2. Jambi</p>
-        <p>3. Wings For Marie (Pt 1)</p>
-        <p>4. 10,000 Days (Wings Pt 2)</p>
-        <p>5. The Pot</p>
-        <p>6. Lipan Conjuring</p>
-        <p>7. Lost Keys (Blame Hofman)</p>
-        <p>8. Rosetta Stoned</p>
-        <p>9. Intension</p>
-        <p>10. Right in Two</p>
-        <p>11. Viginti Tires</p>
-    </div>
+        <div class="song_names" id="songs">
+            <p>1. Vicarious</p>
+            <p>2. Jambi</p>
+            <p>3. Wings For Marie (Pt 1)</p>
+            <p>4. 10,000 Days (Wings Pt 2)</p>
+            <p>5. The Pot</p>
+            <p>6. Lipan Conjuring</p>
+            <p>7. Lost Keys (Blame Hofman)</p>
+            <p>8. Rosetta Stoned</p>
+            <p>9. Intension</p>
+            <p>10. Right in Two</p>
+            <p>11. Viginti Tires</p>
+        </div>
 
+    </div>
 </div>
 
 <!-- bottom section-->
-
+<div class = "bottom_section">
+    <p1> everything owned by Tool.</p1>
+</div>
 
 <img scr = "disk.png">
 <script>
