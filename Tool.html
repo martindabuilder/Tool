@@ -17,14 +17,22 @@ html, body {
 }
 .mid_section{
     position: relative;
-    height: 100vh;
+    height: 120vh;
     overflow: hidden;
     z-index: 1;
-    background-color: rgb(2, 2, 33);
-}
-.bottom_section{
-    height: 50vh;
-    background-color: rgb(240, 12, 12);
+    background-color: rgb(0, 0, 0);
+
+    margin: 0;
+    --x: calc(var(--posX, 0) * 1px);
+    --y: calc(var(--posY, 0) * 1px);
+    background-image: 
+    linear-gradient(115deg, rgb(16, 97, 134), rgb(255, 255, 255)), 
+    radial-gradient( 90% 100% at calc( 50% + var(--x)) calc( 0% + var(--y)), rgb(0, 0, 0), rgb(14, 12, 72)), 
+    radial-gradient(100% 100% at calc( 80% - var(--x)) calc( 0% - var(--y)), rgb(56, 144, 166), rgb(036 000 000)), 
+    radial-gradient(150% 210% at calc(100% + var(--x)) calc( 0% + var(--y)), rgb(43, 43, 50), rgb(13, 16, 94)), 
+    radial-gradient(100% 100% at calc(100% - var(--x)) calc(30% - var(--y)), rgb(3, 17, 41), rgb(15, 35, 128)), 
+    linear-gradient(60deg, rgb(4, 16, 53), rgb(40, 31, 79));
+  background-blend-mode: overlay, overlay, difference, difference, difference, normal;
 }
 
 .black_gradient {
@@ -121,12 +129,10 @@ html, body {
 }
 
 
-
 /* holographic effect on album art */
 .holographiccover {
     width: 110%;
     height: auto;
-    background: rgb(4, 2, 58);
     display: flex;
     align-items: center;
     position: relative;
@@ -148,7 +154,7 @@ html, body {
       0deg,
       transparent,
       transparent 30%,
-      rgb(56, 56, 84)
+      rgb(80, 80, 123)
       );
     transform: rotate(-45deg);
     transition: all 0.8s ease;
@@ -271,6 +277,15 @@ appearOptions);
 
 faders.forEach(fader => {
     appearOnScroll.observe(fader);
+})
+
+
+/*album art bg moving section*/
+document.body.addEventListener("pointermove", (e)=>{
+  const { currentTarget: el, clientX: x, clientY: y } = e;
+  const { top: t, left: l, width: w, height: h } = el.getBoundingClientRect();
+  el.style.setProperty('--posX',  x-l-w/2);
+  el.style.setProperty('--posY',  y-t-h/2);
 })
 
 
