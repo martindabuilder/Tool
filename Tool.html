@@ -84,33 +84,35 @@ html, body {
     filter: drop-shadow(0 0 10px #c8d1d9);
 }
 
-.coverartfade {
-    opacity: 0;
-    animation: fade_cover 1.2s ease-in;
-    animation-delay: 0.3s;
-    animation-fill-mode: forwards;
-}
-@keyframes fade_cover{
-    from { opacity: 0;}
-    to {opacity: 100;}
-}
-
 /* album container centered */
 .album_content {
-    margin-top: 0vh;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
 .album_art {
-    max-width: 350px; 
+    max-width: 450px; 
 }
+
+.albumfade {
+    opacity: 0;
+    transition: opacity 250ms ease-in;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+}
+.albumfade.appear{
+    opacity: 1;
+}
+
+
 
 /* holographic effect on album art */
 .holographiccover {
-    width: 100%;
+    width: 110%;
     height: auto;
     background: rgb(4, 2, 58);
     display: flex;
@@ -121,7 +123,7 @@ html, body {
     transition: all 0.6s ease-out;
 }
 .holographiccover img {
-    width: 110%; 
+    width: 105%; 
     height: auto;
     z-index: 2;
 }
@@ -151,12 +153,16 @@ html, body {
     transform: rotate(-45deg) translateY(100%);
 }
 .holographiccover.move {
-    transform: translate(-500px);
+    transform: translate(-370px);
 }
+
+
 
 /* song names (hidden for now) */
 .song_names {
+    position: absolute;
     color: rgb(170, 173, 201);
+    left: 55%;
     font-family: 'Copperplate Gothic Light', monospace;
     font-size: 1.5em;
     opacity: 0;
@@ -171,7 +177,7 @@ html, body {
 </head>
 
 <body>
-
+<!-- topsection-->
 <div class="top_section fade_in">
     <div class="black_gradient"></div>
     <div class="background"></div>
@@ -185,11 +191,11 @@ html, body {
 
 </div>
 
-
+<!-- midsection -->
 <div class="album_content"> 
-    <div class="album_art">
-        <div class="holographiccover" id="coverholo" "coverartfade" onclick="movecover()">
-            <img src="albumcover.png" alt="Album Cover">
+    <div class="album_art albumfade">
+        <div class="holographiccover" id="coverholo" onclick="movecover()">
+            <img src="albumcover.png" alt="Album Cover" id ="cover">
         </div>
     </div>
     
@@ -209,8 +215,12 @@ html, body {
 
 </div>
 
+<!-- bottom section-->
+
+
+<img scr = "disk.png">
 <script>
-/*scroll fade*/
+/*scroll fade for bg*/
 window.addEventListener('scroll', function () {
     const scrollY = window.scrollY;
     const maxBlur = 10;
@@ -223,6 +233,30 @@ window.addEventListener('scroll', function () {
     bg.style.filter = `blur(${blur}px)`;
     bg.style.opacity = opacity;
 });
+
+/*scroll fade for album art*/
+const faders = document.querySelectorAll('.albumfade');
+const appearOptions = {
+    threshold: 1,
+    rootMargin: "0px 0px -50px 0px"
+
+}
+const appearOnScroll = new IntersectionObserver(function(entries, appealOnScroll) {
+    entries.forEach(entry => {
+        if(!entry.isIntersecting){
+            return;
+        } else {
+            entry.target.classList.add('appear');
+            appearOnScroll.unobserve(entry.target);
+        }
+    })
+}, 
+appearOptions);
+
+faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+})
+
 
 function movecover() {
     var wrapper = document.getElementById("coverholo");
