@@ -20,7 +20,7 @@ html, body {
 }
 .mid_section{
     position: relative;
-    height: 120vh;
+    height: 100vh;
     overflow: hidden;
     z-index: 1;
     background-color: rgb(0, 0, 0);
@@ -184,6 +184,18 @@ html, body {
     transform: translate(-370px);
 }
 
+.cd_disk {
+
+}
+.cd_disk img {
+    width: 100%;
+    height: 100%;
+    animation: spin 10s linear infinite;
+}
+.cd_disk_show{
+
+}
+
 
 /* song names*/
 .song_container {
@@ -236,6 +248,10 @@ html, body {
             </div>
         </div>
 
+         <div class="cd_disk" id="cddisk">
+        <img src="disk.png" alt="CD Disk">
+        </div>
+
         <div class = "song_container" id = "songs">
             <div class = "songs_each">1.  Vicarious </div>
             <div class = "songs_each">2.  Jambi </div>
@@ -253,9 +269,6 @@ html, body {
 </div>
 
 <!-- bottom section-->
-<div class = "bottom_section">
-    <p1> everything owned by Tool.</p1>
-</div>
 
 <script>
 /*scroll fade for bg*/
@@ -328,7 +341,9 @@ function movecover() {
     }
 }
 
-
+window.onbeforeunload = function () {
+window.scrollTo(0, 0);
+}
 
 </script>
 
