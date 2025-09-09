@@ -12,8 +12,6 @@ html, body {
     height: 100%;
 }
 
-
-
 .top_section {
     position: relative;
     height: 100vh; 
@@ -45,6 +43,7 @@ html, body {
     height: 10vh; 
     overflow: hidden;
     z-index: 1;
+    
 }
 
 .black_gradient {
@@ -186,6 +185,13 @@ html, body {
     transform: translate(-370px);
 }
 
+/*disk and album wrapper*/
+.cd_and_art
+{
+    position: relative;
+    display: inline-block;
+}
+
 /*disk*/
 .cd_disk {
     position: absolute;
@@ -200,9 +206,7 @@ html, body {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-.cd_disk_show{
-    opacity: 0;
-}
+
 
 /* song names*/
 .song_container {
@@ -249,38 +253,38 @@ html, body {
 <!-- midsection -->
 <div class = "mid_section">
     <div class="album_content"> 
-        <div class="album_art albumfade">
-            <div class="holographiccover" id="coverholo" onclick="movecover()">
-                <img src="albumcover.png" alt="Album Cover" id ="cover">
+        <div class = "cd_and_art">
+            <div class="album_art albumfade">
+                <div class="holographiccover" id="coverholo" onclick="movecover()">
+                    <img src="albumcover.png" alt="Album Cover" id ="cover">
+                </div>
+            </div>
+
+            <div class="cd_disk">
+                <img src="disk.png" alt="CD Disk" id="cddisk">
             </div>
         </div>
-
-         <div class="cd_disk">
-            <img src="disk.png" alt="CD Disk" id="cddisk">
-        </div>
-
-        <div class = "song_container" id = "songs">
+            <!-- song list-->
+            <div class = "song_container" id = "songs">
             <div class="songs_each" onclick="play_song('songs_mp3/Vicarious.mp3')">1. Vicarious</div>
             <div class = "songs_each" onclick="play_song('songs_mp3/Jambi.mp3')">2.  Jambi </div>
             <div class = "songs_each" onclick="play_song('songs_mp3/Wings for Marie.mp3')">3.  Wings For Marie(Pt 1) </div>
-            <div class = "songs_each">4.  10,000 Days (Wings Pt 2)</div>
-            <div class = "songs_each">5.  The Pot</div>
-            <div class = "songs_each">6.  Lipan Conjuring</div>
-            <div class = "songs_each">7.  Lost Keys (Blame Hofman)</div>
-            <div class = "songs_each">8.  Rosetta Stoned</div>
-            <div class = "songs_each">9.  Intension</div>
-            <div class = "songs_each">10. Right in Two</div>
-            <div class = "songs_each">11. Viginti Tires</div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/10,0000.mp3')">4.  10,000 Days (Wings Pt 2)</div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/The Pot.mp3')">5.  The Pot</div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/Lipan Conjuring.mp3')">6.  Lipan Conjuring</div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/Lost Keys')">7.  Lost Keys (Blame Hofman)</div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/Rosetta Stoned.mp3')">8.  Rosetta Stoned</div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/Intension.mp3')">9.  Intension</div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/Right in Two')">10. Right in Two</div>
+            <div class = "songs_each" onclick="play_song('Viginti Tires')">11. Viginti Tires</div>
         </div>
     </div>
 </div>
 
 <!-- bottom section-->
-
-
-<audio id="audio_player" preload="auto"></audio>
-   
-</audio>
+<div class = "bottom_section">
+    <audio id="audio_player" controls preload="auto" center> </audio> 
+</div>
 
 <script>
 /*scroll fade for bg*/
