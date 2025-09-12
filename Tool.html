@@ -50,7 +50,6 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
 }
 .mid_gradient{
     height: 100%;
@@ -282,14 +281,16 @@ html, body {
 }
 
 /*custom audio player*/
-.audio_player {  
-    position: top;
-    padding-bottom: 5px;          
-    left: 50%;               
-    width: 50%;           
-    z-index: 3; 
+.custom_audio_player {  
+   background:rgb(25, 14, 94);
+   align-items: center;
 }
-
+.progress-bar {
+    accent-color: rgb(136, 137, 175);
+}
+.buttons {
+    color: rgb(136, 137, 175);
+}
 </style>
 </head>
 
@@ -342,7 +343,7 @@ html, body {
 
 <!-- bottom section-->
 <div class = "bottom_section">
-    <audio id = "audio_player" class = "audio_player"controls></audio>
+    <audio id = "audio_player" class = "custom_audio_player"controls></audio>
     <div class = "logo_text">
         <div class = "mylogostyle">
             <img src="mylogo.png">
