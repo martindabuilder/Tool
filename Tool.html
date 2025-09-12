@@ -39,11 +39,26 @@ html, body {
     background-blend-mode: overlay, overlay, difference, difference, difference, normal;
 }
 .bottom_section {
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
     position: relative;
-    height: 10vh; 
+    height: 20vh; 
+    gap: 10px;
     overflow: hidden;
     z-index: 1;
     
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.mid_gradient{
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(to top, black, transparent);
+    opacity: 0.9;
+    position: absolute;
+    z-index: 1;
 }
 
 .black_gradient {
@@ -61,11 +76,15 @@ html, body {
     background-image: url('BG.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
+    animation: bg_slide 30s infinite;
+}
+@keyframes bg_slide {
+  /*ne sum go izmislil*/
 }
 
 .albumtitle {
@@ -196,7 +215,7 @@ html, body {
 /*disk*/
 .cd_disk {
     position: absolute;
-    top: 0;
+    top: 4%;
     left: 0;
     width: 100%;
     height: auto;
@@ -231,10 +250,11 @@ html, body {
     font-family: 'Copperplate Gothic Light', monospace;
     font-size: 1.5em;
     text-align: left;
+    z-index: 2;
 }
 .songs_each{
     opacity: 0;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
     transform: translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
 }
@@ -246,6 +266,29 @@ html, body {
     color: rgb(182, 186, 230);
 }
 
+.mylogostyle{
+    max-width: 100px;
+
+}
+.mylogostyle img {
+    width: 50px;
+    height: auto;
+    filter: drop-shadow(0 0 5px #25264b);
+}
+.logo_text{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/*custom audio player*/
+.audio_player {  
+    position: top;
+    padding-bottom: 5px;          
+    left: 50%;               
+    width: 50%;           
+    z-index: 3; 
+}
 
 </style>
 </head>
@@ -267,18 +310,19 @@ html, body {
 
 <!-- midsection -->
 <div class = "mid_section">
-    <div class="album_content"> 
-        <div class = "cd_and_art">
-            <div class="album_art albumfade">
-                <div class="holographiccover" id="coverholo" onclick="movecover()">
+    <div class ="mid_gradient"></div>
+        <div class="album_content"> 
+            <div class = "cd_and_art">
+                <div class="album_art albumfade">
+                    <div class="holographiccover" id="coverholo" onclick="movecover()">
                     <img src="albumcover.png" alt="Album Cover" id ="cover">
+                    </div>
+                </div>
+
+                <div class="cd_disk">
+                <img src="disk.png" alt="CD Disk" id="cd_disk">
                 </div>
             </div>
-
-            <div class="cd_disk">
-                <img src="disk.png" alt="CD Disk" id="cd_disk">
-            </div>
-        </div>
             <!-- song list-->
             <div class = "song_container" id = "songs">
             <div class="songs_each" onclick="play_song('songs_mp3/Vicarious.mp3')">1. Vicarious</div>
@@ -292,13 +336,22 @@ html, body {
             <div class = "songs_each" onclick="play_song('songs_mp3/Intension.mp3')">9.  Intension</div>
             <div class = "songs_each" onclick="play_song('songs_mp3/Right in Two')">10. Right in Two</div>
             <div class = "songs_each" onclick="play_song('Viginti Tires')">11. Viginti Tires</div>
-        </div>
+            </div>
     </div>
 </div>
 
 <!-- bottom section-->
 <div class = "bottom_section">
-    <audio id="audio_player" controls preload="auto" center> </audio> 
+    <audio id = "audio_player" class = "audio_player"controls></audio>
+    <div class = "logo_text">
+        <div class = "mylogostyle">
+            <img src="mylogo.png">
+        </div>
+
+        <div style="color: rgb(136, 137, 175); font-family: 'Copperplate Gothic Light', monospace; font-size: 1.0em; text-align: center;">
+            <p1>Everything owned by Tool.</p1>
+        </div>
+    </div>
 </div>
 
 <script>
