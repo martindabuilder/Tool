@@ -127,6 +127,7 @@ html, body {
 
 .album_art {
     max-width: 450px; 
+    z-index: 2;
 }
 
 .albumfade {
@@ -149,7 +150,7 @@ html, body {
     overflow: hidden;
     border-radius: 16px;
     transition: all 0.6s ease-out;
-    z-index: 1;
+    z-index: 2;
 }
 .holographiccover img {
     width: 105%; 
@@ -195,18 +196,32 @@ html, body {
 /*disk*/
 .cd_disk {
     position: absolute;
-}
-.cd_disk img {
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    animation: spin 15s linear infinite;
+    height: auto;
+    transition: all 0.8s ease;
+    transform: translateX(0); 
+    opacity: 0;
     z-index: 0;
 }
+
+.cd_disk img {
+    width: 100%;
+    height: auto;
+    animation: spin 15s linear infinite;
+}
+
+.cd_disk.showdisk {
+    opacity: 1;
+    z-index: 1;
+    transform: translateX(-70%); 
+}
+
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
 
 /* song names*/
 .song_container {
@@ -261,7 +276,7 @@ html, body {
             </div>
 
             <div class="cd_disk">
-                <img src="disk.png" alt="CD Disk" id="cddisk">
+                <img src="disk.png" alt="CD Disk" id="cd_disk">
             </div>
         </div>
             <!-- song list-->
@@ -336,9 +351,11 @@ document.body.addEventListener("pointermove", (e)=>{
 function movecover() { 
     var wrapper = document.getElementById("coverholo"); 
     var songs = document.querySelectorAll(".songs_each"); 
-    var disk = document.getElementById("cddisk")
+    var disk = document.querySelector(".cd_disk");
+
     wrapper.classList.toggle("move"); 
-    
+    disk.classList.toggle("showdisk"); 
+
     if (wrapper.classList.contains("move")) {
         let i = 0;
         function showNext() {
@@ -353,7 +370,7 @@ function movecover() {
         songs.forEach((song, index) => {
             setTimeout(() => {
                 song.classList.remove("showsongs");
-            }, index *5);
+            }, index * 5);
         });
     }
 }
@@ -370,8 +387,6 @@ function play_song(file) {
     player.play();
   }
 </script>
-
-
 
 </body>
 </html>
