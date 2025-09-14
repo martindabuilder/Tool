@@ -151,10 +151,20 @@ html, body {
 .albumfade {
     opacity: 0;
     transition: opacity 250ms ease-in;
-    animation-delay: 2s;
+    animation-delay: 3s;
     animation-fill-mode: forwards;
 }
 .albumfade.appear{
+    opacity: 1;
+}
+
+.botttomsectionfade {
+    opacity: 0;
+    transition: opacity 250ms ease-in;
+    animation-delay: 3s;
+    animation-fill-mode: forwards;
+}
+.botttomsectionfade.appear{
     opacity: 1;
 }
 
@@ -223,7 +233,6 @@ html, body {
     opacity: 0;
     z-index: 0;
 }
-
 .cd_disk img {
     width: 100%;
     height: auto;
@@ -241,7 +250,7 @@ html, body {
     to { transform: rotate(360deg); }
 }
 
-/* song names*/
+/*song names*/
 .song_container {
     position: absolute;
     color: rgb(136, 137, 175);
@@ -281,17 +290,23 @@ html, body {
 
 /*custom audio player*/
 .custom_audio_player {  
-    background: linear-gradient(135deg, #05021c, #051337);
+    background: linear-gradient(135deg, #05021c, #061847);
     padding: 12px 18px;
     border: #373760 2px solid;
     border-radius: 16px;
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 60%;
+    width: 800px;
+    height: 100px;
     font-family: 'Copperplate Gothic Light', monospace;
+    animation: pulse_glow 3s infinite;
+}
+@keyframes pulse_glow {
 
-}#pauseplay_button {
+}
+
+#pauseplay_button {
     background: none;
     border: none;
     color: rgb(98, 99, 134);
@@ -310,7 +325,7 @@ html, body {
     position: relative;
 }
 #time_display {
-    color: rgb(114, 116, 159);
+    color: rgb(160, 188, 225);
     font-size: 1em;
     min-width: 60px;
     text-align: right;
@@ -319,6 +334,29 @@ html, body {
     width: 100px;
     accent-color: rgb(114, 116, 159);
     cursor: pointer;
+}
+#skip_button_forward {
+    background: none;
+    border: none;
+    color: rgb(98, 99, 134);
+    font-size: 1.0em;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+#skip_button_forward:hover {
+    color: rgb(113, 144, 185);
+}
+
+#skip_button_backward {
+    background: none;
+    border: none;
+    color: rgb(98, 99, 134);
+    font-size: 1.0em;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+#skip_button_backward:hover {
+    color: rgb(113, 144, 185);
 }
 
 
@@ -377,8 +415,11 @@ html, body {
   <div class="custom_audio_player">
     <audio id="audio_player"></audio>
 
-    <!--play/pause button-->
+    <!--play/pause, skip buttons-->
+    <button id="skip_button_backward" onclick="if(currentSongIndex > 0) { currentSongIndex--; play_song(songs[currentSongIndex]); }">&#9664;&#9664;</button> 
     <button id="pauseplay_button" onclick="togglePlayPause()"> &#9658; </button>
+    <button id="skip_button_forward" onclick="if(currentSongIndex > 0) { currentSongIndex++; play_song(songs[currentSongIndex]); }">&#9654;&#9654;</button> 
+
 
     <!--time display-->
     <input type = "range" id="progress_bar" value="0" min="0" max="100" step="1">
@@ -436,7 +477,7 @@ appearOptions);
 
 faders.forEach(fader => {
     appearOnScroll.observe(fader);
-})
+});
 
 /*album art bg moving section*/
 document.body.addEventListener("pointermove", (e)=>{
@@ -481,23 +522,53 @@ window.scrollTo(0, 0);
 /*playing songs on click*/
 var player = document.getElementById("audio_player");
 
+/*song list*/
+const songs = [
+    'songs_mp3/Vicarious.mp3',
+    'songs_mp3/Jambi.mp3',
+    'songs_mp3/Wings for Marie.mp3',
+    'songs_mp3/10000.mp3',
+    'songs_mp3/The Pot.mp3',
+    'songs_mp3/Lipan Conjuring.mp3',
+    'songs_mp3/Lost Keys.mp3',
+    'songs_mp3/Rosetta Stoned.mp3',
+    'songs_mp3/Intension.mp3',
+    'songs_mp3/Right In Two.mp3',
+    'songs_mp3/Viginti.mp3'
+];
+
+let currentSongIndex = 0;
+
 function play_song(file) {
+    currentSongIndex = songs.indexOf(file);
     player.src = file;
     player.play();
     player.volume = 0.4;
 
-    document.getElementById("pauseplay_button").innerHTML = "&#10073;&#10073;";
+    document.getElementById("pauseplay_button").innerHTML = "&#10073;&#10073;"//pause
 }
+
+/*auto play on the next song once the current one ends*/
+player.addEventListener('ended', function() {
+    currentSongIndex++;
+    if (currentSongIndex < songs.length) {
+        player.src = songs[currentSongIndex];
+        player.play();
+        document.getElementById("pauseplay_button").innerHTML = "&#10073;&#10073;"//pause
+    } else {
+        document.getElementById("pauseplay_button").innerHTML = "&#9658;"//play
+    }
+});
 
 /*controls for custom player*/
 /*changing play/pause button on click*/
 function togglePlayPause() {
   if (player.paused) {
     player.play();
-    document.getElementById("pauseplay_button").innerHTML = "&#10073;&#10073;"; // pause icon
+    document.getElementById("pauseplay_button").innerHTML = "&#10073;&#10073;" //pause
   } else {
     player.pause();
-    document.getElementById("pauseplay_button").innerHTML = "&#9658;"; // play triangle
+    document.getElementById("pauseplay_button").innerHTML = "&#9658;" //play
   }
 }
 
@@ -527,7 +598,6 @@ document.getElementById('progress_bar').addEventListener('input', function() {
         player.currentTime = seekTime;
     }
 });
-
 </script>
 
 </body>
