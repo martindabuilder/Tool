@@ -267,12 +267,11 @@ html, body {
 
 .mylogostyle{
     max-width: 100px;
-
 }
 .mylogostyle img {
     width: 50px;
     height: auto;
-    filter: drop-shadow(0 0 5px #25264b);
+    filter: drop-shadow(0 0 5px #447498);
 }
 .logo_text{
     display: flex;
@@ -282,15 +281,47 @@ html, body {
 
 /*custom audio player*/
 .custom_audio_player {  
-   background:rgb(25, 14, 94);
-   align-items: center;
+    background: linear-gradient(135deg, #05021c, #051337);
+    padding: 12px 18px;
+    border: #373760 2px solid;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 60%;
+    font-family: 'Copperplate Gothic Light', monospace;
+
+}#pauseplay_button {
+    background: none;
+    border: none;
+    color: rgb(98, 99, 134);
+    font-size: 1.2em;
+    cursor: pointer;
 }
-.progress-bar {
-    accent-color: rgb(136, 137, 175);
+#pauseplay_button:hover {
+    color: rgb(181, 208, 247);
 }
-.buttons {
-    color: rgb(136, 137, 175);
+#progress_bar{
+    flex-grow: 1;
+    height: 8px;
+    background: #222244;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
 }
+#time_display {
+    color: rgb(98, 99, 134);
+    font-size: 1em;
+    min-width: 60px;
+    text-align: right;
+}
+#volue_control {
+    width: 100px;
+    color: rgb(98, 99, 134);
+    cursor: pointer;
+}
+
+
 </style>
 </head>
 
@@ -342,17 +373,20 @@ html, body {
 </div>
 
 <!-- bottom section-->
-<div class = "bottom_section">
-    <audio id = "audio_player" class = "custom_audio_player"controls></audio>
-    <div class = "logo_text">
-        <div class = "mylogostyle">
-            <img src="mylogo.png">
-        </div>
+<div class="bottom_section">
+  <div class="custom_audio_player">
+    <audio id="audio_player"></audio>
+    
+  </div>
 
-        <div style="color: rgb(136, 137, 175); font-family: 'Copperplate Gothic Light', monospace; font-size: 1.0em; text-align: center;">
-            <p1>Everything owned by Tool.</p1>
-        </div>
+  <div class="logo_text">
+    <div class="mylogostyle">
+      <img src="mylogo.png">
     </div>
+    <div style="color: rgb(136, 137, 175); font-family: 'Copperplate Gothic Light', monospace; font-size: 1.0em; text-align: center;">
+        <p1>Everything owned by Tool.</p1>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -439,7 +473,11 @@ var player = document.getElementById("audio_player");
 function play_song(file) {
     player.src = file;
     player.play();
-  }
+    player.volume = 0.4;
+}
+
+/*controls for custom player*/
+
 </script>
 
 </body>
