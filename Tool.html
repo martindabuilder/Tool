@@ -308,6 +308,7 @@ html, body {
 }
 
 #pauseplay_button {
+    width: 40px;
     background: none;
     border: none;
     color: rgb(98, 99, 134);
@@ -318,34 +319,9 @@ html, body {
 #pauseplay_button:hover {
     color: rgb(113, 144, 185);
 }
-#progress_bar{
-    width: 100%;
-    flex-grow: 1;
-    max-width: 400px;
-    accent-color: rgb(114, 116, 159);
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-}
-#time_display {
-    color: rgb(160, 188, 225);
-    font-size: 1em;
-    min-width: 60px;
-    text-align: right;
-}
-#full_time_display {
-    color: rgb(160, 188, 225);
-    font-size: 1em;
-    min-width: 60px;
-    text-align: right;
-}
-#volume_control {
-    position : relative;
-    width: 100px;
-    accent-color: rgb(114, 116, 159);
-    cursor: pointer;
-}
-#skip_button_forward {
+
+#skip_button_forward, #skip_button_backward {
+    width: 40px;
     background: none;
     border: none;
     color: rgb(98, 99, 134);
@@ -356,18 +332,40 @@ html, body {
 #skip_button_forward:hover {
     color: rgb(113, 144, 185);
 }
-
-#skip_button_backward {
-    background: none;
-    border: none;
-    color: rgb(98, 99, 134);
-    font-size: 1.0em;
-    cursor: pointer;
-    transition: color 0.3s ease-in-out;
-}
 #skip_button_backward:hover {
     color: rgb(113, 144, 185);
 }
+
+.progress_container{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#progress_bar{
+    width: 100%;
+    flex-grow: 1;
+    max-width: 400px;
+    accent-color: rgb(114, 116, 159);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+#time_display {
+    color: rgb(160, 188, 225);
+    font-size: 1em;
+    min-width: 60px;
+    text-align: right;
+}
+
+#volume_control {
+    flex-shrink: 0;
+    width: 100px;
+    accent-color: rgb(114, 116, 159);
+    cursor: pointer;
+    position: right;
+}
+
 
 </style>
 </head>
@@ -426,7 +424,7 @@ html, body {
 
     <!--play/pause, skip buttons-->
     <button id="skip_button_backward" onclick="if(currentSongIndex > 0) { currentSongIndex--; play_song(songs[currentSongIndex]); }">&#9664;&#9664;</button> 
-    <button id="pauseplay_button" onclick="togglePlayPause()"> &#9658; </button>
+    <button id="pauseplay_button" onclick="togglePlayPause()">&#9658;</button>
     <button id="skip_button_forward" onclick="if(currentSongIndex > 0) { currentSongIndex++; play_song(songs[currentSongIndex]); }">&#9654;&#9654;</button> 
 
     <!--time display-->
