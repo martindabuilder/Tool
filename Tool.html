@@ -75,16 +75,12 @@ html, body {
     background-image: url('BG.png');
     background-size: cover;
     background-position: center;
-    background-repeat: repeat;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
-    animation: bg_slide 30s infinite;
 }
-@keyframes bg_slide {
-  /*ne sum go izmislil*/
-}
+
 
 .albumtitle {
     color: rgb(226, 227, 242); 
@@ -265,15 +261,23 @@ html, body {
     padding-bottom: 10px;
     transform: translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease-in-out, color 0.3s ease;
+    visibility: hidden;
 }
 .songs_each.showsongs{
     opacity: 1;
     transform: translateY(0);
+    visibility: visible;
 }
 .songs_each:hover{
     color: rgb(139, 182, 222);
 }
+.songs_each.active{
+    color: rgb(166, 184, 238);
+    font-weight: bold;
+    text-shadow: 0 0 5px #7e88c2;
+}
 
+/*logo and text*/
 .mylogostyle{
     max-width: 100px;
 }
@@ -302,9 +306,6 @@ html, body {
     font-family: 'Copperplate Gothic Light', monospace;
     animation: pulse_glow 3s infinite;
 }
-@keyframes pulse_glow {
-
-}
 
 #pauseplay_button {
     background: none;
@@ -318,7 +319,9 @@ html, body {
     color: rgb(113, 144, 185);
 }
 #progress_bar{
+    width: 100%;
     flex-grow: 1;
+    max-width: 400px;
     accent-color: rgb(114, 116, 159);
     border-radius: 4px;
     cursor: pointer;
@@ -330,7 +333,14 @@ html, body {
     min-width: 60px;
     text-align: right;
 }
-#volue_control {
+#full_time_display {
+    color: rgb(160, 188, 225);
+    font-size: 1em;
+    min-width: 60px;
+    text-align: right;
+}
+#volume_control {
+    position : relative;
     width: 100px;
     accent-color: rgb(114, 116, 159);
     cursor: pointer;
@@ -358,7 +368,6 @@ html, body {
 #skip_button_backward:hover {
     color: rgb(113, 144, 185);
 }
-
 
 </style>
 </head>
@@ -397,7 +406,7 @@ html, body {
             <div class = "song_container" id = "songs">
             <div class="songs_each" onclick="play_song('songs_mp3/Vicarious.mp3')">1. Vicarious</div>
             <div class = "songs_each" onclick="play_song('songs_mp3/Jambi.mp3')">2.  Jambi </div>
-            <div class = "songs_each" onclick="play_song('songs_mp3/Wings for Marie.mp3')">3.  Wings For Marie(Pt 1) </div>
+            <div class = "songs_each" onclick="play_song('songs_mp3/Wings for Marie.mp3')">3.  Wings For Marie (Pt 1) </div>
             <div class = "songs_each" onclick="play_song('songs_mp3/10000.mp3')">4.  10,000 Days (Wings Pt 2)</div>
             <div class = "songs_each" onclick="play_song('songs_mp3/The Pot.mp3')">5.  The Pot</div>
             <div class = "songs_each" onclick="play_song('songs_mp3/Lipan Conjuring.mp3')">6.  Lipan Conjuring</div>
@@ -420,15 +429,14 @@ html, body {
     <button id="pauseplay_button" onclick="togglePlayPause()"> &#9658; </button>
     <button id="skip_button_forward" onclick="if(currentSongIndex > 0) { currentSongIndex++; play_song(songs[currentSongIndex]); }">&#9654;&#9654;</button> 
 
-
     <!--time display-->
     <input type = "range" id="progress_bar" value="0" min="0" max="100" step="1">
     
     <!--song duration-->
-    <span id="time_display">0:00</span>
+    <span id="time_display">0:00 / 0:00</span>
 
     <!--volume control-->
-    <input type="range" id="volue_control" min="0" max="1" step="0.01" value="0.4" onchange="audio_player.volume = this.value">
+    <input type="range" id="volume_control" min="0" max="1" step="0.01" value="0.4" onchange="audio_player.volume = this.value">
     </div>
 
   <div class="logo_text">
@@ -442,6 +450,7 @@ html, body {
 </div>
 
 <script>
+
 /*scroll fade for bg*/
 window.addEventListener('scroll', function () {
     const scrollY = window.scrollY;
@@ -546,6 +555,16 @@ function play_song(file) {
     player.volume = 0.4;
 
     document.getElementById("pauseplay_button").innerHTML = "&#10073;&#10073;"//pause
+
+    /*highlighting the current song*/
+    const songElements = document.querySelectorAll('.songs_each');
+    songElements.forEach((element, index) => {
+        if (index === currentSongIndex) {
+            element.classList.add('active');
+        } else {
+            element.classList.remove('active');
+        }
+    });
 }
 
 /*auto play on the next song once the current one ends*/
@@ -555,8 +574,25 @@ player.addEventListener('ended', function() {
         player.src = songs[currentSongIndex];
         player.play();
         document.getElementById("pauseplay_button").innerHTML = "&#10073;&#10073;"//pause
+
+        /*highlighting the current song*/
+        const songElements = document.querySelectorAll('.songs_each');
+        songElements.forEach((element, index) => {
+            if (index === currentSongIndex) {
+                element.classList.add('active');
+            } else {
+                element.classList.remove('active');
+            }
+        });
     } else {
         document.getElementById("pauseplay_button").innerHTML = "&#9658;"//play
+    }
+});
+
+/*if play is clicked while no song is playing, it automatically plays the first song*/
+document.getElementById("pauseplay_button").addEventListener('click', function() {
+    if (!player.src) {
+        play_song(songs[0]);
     }
 });
 
@@ -574,19 +610,26 @@ function togglePlayPause() {
 
 /*updating song duration and time*/
 player.addEventListener('timeupdate', function() {
-    var progressBar = document.getElementById('progress_bar');
-    var timeDisplay = document.getElementById('time_display');
-    var currentTime = player.currentTime;
-    var duration = player.duration;
+    const progressBar = document.getElementById('progress_bar');
+    const timeDisplay = document.getElementById('time_display');
+    const currentTime = player.currentTime;
+    const duration = player.duration;
+
+    // helper function to format seconds as minutes:seconds
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        let seconds = Math.floor(time % 60);
+        if (seconds < 10) seconds = '0' + seconds;
+        return `${minutes}:${seconds}`;
+    }
 
     if (!isNaN(duration)) {
-        var progressPercent = (currentTime / duration) * 100;
+        // update progress bar
+        const progressPercent = (currentTime / duration) * 100;
         progressBar.value = progressPercent;
 
-        var minutes = Math.floor(currentTime / 60);
-        var seconds = Math.floor(currentTime % 60);
-        if (seconds < 10) { seconds = '0' + seconds; }
-        timeDisplay.textContent = minutes + ':' + seconds;
+        // update time display with current time / total duration
+        timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
     }
 });
 
