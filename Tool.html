@@ -81,7 +81,6 @@ html, body {
     z-index: 1;
 }
 
-
 .albumtitle {
     color: rgb(226, 227, 242); 
     font-family: 'Copperplate Gothic Light', monospace;
@@ -90,7 +89,8 @@ html, body {
     transition: opacity 0.75s ease;
     text-align: center;
     z-index: 2;
-    filter: drop-shadow(0 0 10px #c8d1d9);
+    filter: drop-shadow(0 0 10px #acd5e6);
+    animation: periodic_text_glow 10s infinite ease-in-out;
 }
 .logo_center {
     display: flex;
@@ -110,10 +110,6 @@ html, body {
     to { opacity: 1; }
 }
 
-.logo_glow {
-    width: auto;
-    height: auto;
-}
 .logo_fade_in {
     opacity: 0;
     animation: fade_logo_frame 1.2s ease-in;
@@ -126,8 +122,38 @@ html, body {
 }
 .logo_center img {
     width: 70%;
-    filter: drop-shadow(0 0 10px #c8d1d9);
+    filter: drop-shadow(0 0 15px #447498);
+    animation: periodic_logo_glow 5s infinite ease-in-out;
 }
+
+/*pulsating glow effect on logo*/
+@keyframes periodic_logo_glow {
+0% { filter: drop-shadow(0 0 2px #c1e2e6)
+        drop-shadow(0 0 3px #9ba3c6)
+        drop-shadow(0 0 4px #7383c1)}
+
+50% { filter: drop-shadow(0 0 4px #cddaf5)
+        drop-shadow(0 0 5px #8aa7e9)
+        drop-shadow(0 0 4px #4d6ce9)}
+100%{ filter: drop-shadow(0 0 2px #c1e2e6)
+        drop-shadow(0 0 3px #9ba3c6)
+        drop-shadow(0 0 4px #7383c1)}
+
+}
+/*glow effect on album title*/
+@keyframes periodic_text_glow {
+0% { filter: drop-shadow(0 0 1px #85a4a8)
+        drop-shadow(0 0 2px #6c7497)
+        drop-shadow(0 0 3px #5363a1)}
+
+50% { filter: drop-shadow(0 0 3px #9ba9c7)
+        drop-shadow(0 0 4px #6c83b9)
+        drop-shadow(0 0 3px #5e6eb1)}
+100%{ filter: drop-shadow(0 0 1px #85a4a8)
+        drop-shadow(0 0 2px #6c7497)
+        drop-shadow(0 0 3px #5363a1)}
+}
+
 
 /* album container centered */
 .album_content {
@@ -146,21 +172,10 @@ html, body {
 
 .albumfade {
     opacity: 0;
-    transition: opacity 250ms ease-in;
-    animation-delay: 3s;
+    transition: opacity 250ms ease-in-out;
     animation-fill-mode: forwards;
 }
 .albumfade.appear{
-    opacity: 1;
-}
-
-.botttomsectionfade {
-    opacity: 0;
-    transition: opacity 250ms ease-in;
-    animation-delay: 3s;
-    animation-fill-mode: forwards;
-}
-.botttomsectionfade.appear{
     opacity: 1;
 }
 
@@ -190,7 +205,7 @@ html, body {
       0deg,
       transparent,
       transparent 30%,
-      rgb(80, 80, 123)
+      rgb(99, 99, 150)
       );
     transform: rotate(-45deg);
     transition: all 0.8s ease;
@@ -233,6 +248,7 @@ html, body {
     width: 100%;
     height: auto;
     animation: spin 15s linear infinite;
+    filter: drop-shadow(0 0 5px #566dd6);
 }
 
 .cd_disk.showdisk {
@@ -261,20 +277,30 @@ html, body {
     padding-bottom: 10px;
     transform: translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease-in-out, color 0.3s ease;
-    visibility: hidden;
+    pointer-events: none;
 }
 .songs_each.showsongs{
     opacity: 1;
     transform: translateY(0);
-    visibility: visible;
+    pointer-events: auto;
 }
 .songs_each:hover{
     color: rgb(139, 182, 222);
+    text-shadow: 0 0 5px rgba(93, 149, 222, 0.911);
 }
 .songs_each.active{
     color: rgb(166, 184, 238);
     font-weight: bold;
-    text-shadow: 0 0 5px #7e88c2;
+    text-shadow: 0 0 5px #7e88c2, 0 0 10px #5f6897;
+    animation: periodic_color_change 3s infinite ease-in-out, transform 1s ease-in-out;
+}
+@keyframes periodic_color_change {
+0% {
+    text-shadow: 0 0 7px #00eaff, 0 0 9px #0033ff, 0 0 11px #0033ff}
+50% {
+    text-shadow: 0 0 14px #cddaf5, 0 0 15px #8aa7e9, 0 0 16px #4d6ce9}
+100%{
+    text-shadow: 0 0 7px #00eaff, 0 0 9px #0033ff, 0 0 11px #0033ff}
 }
 
 /*logo and text*/
@@ -304,7 +330,6 @@ html, body {
     width: 800px;
     height: 100px;
     font-family: 'Copperplate Gothic Light', monospace;
-    animation: pulse_glow 3s infinite;
 }
 
 #pauseplay_button {
@@ -336,11 +361,6 @@ html, body {
     color: rgb(113, 144, 185);
 }
 
-.progress_container{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
 #progress_bar{
     width: 100%;
     flex-grow: 1;
@@ -352,10 +372,12 @@ html, body {
 }
 
 #time_display {
+    gap: 5px;
     color: rgb(160, 188, 225);
-    font-size: 1em;
-    min-width: 60px;
-    text-align: right;
+    font-size: auto;
+    min-width: 110px;
+    max-width: 110px;
+    text-align: left;
 }
 
 #volume_control {
@@ -364,6 +386,97 @@ html, body {
     accent-color: rgb(114, 116, 159);
     cursor: pointer;
     position: right;
+}
+
+.bg-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+}
+
+#stars {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  filter: blur(1px);
+  box-shadow:
+    50px 100px rgb(145, 157, 249),
+    200px 400px rgb(145, 157, 249),
+    350px 250px rgb(145, 157, 249),
+    500px 600px rgb(145, 157, 249),
+    700px 150px rgb(145, 157, 249),
+    850px 500px rgb(145, 157, 249),
+    1000px 300px rgb(145, 157, 249),
+    1200px 450px rgb(145, 157, 249),
+    1350px 200px rgb(145, 157, 249),
+    1500px 550px rgb(145, 157, 249);
+  animation: animStar 40s linear infinite;
+}
+#stars:after {
+  content: " ";
+  position: absolute;
+  top: 1000px;
+  width: 2px;
+  height: 2px;
+  box-shadow:
+    50px 100px rgb(145, 157, 249),
+    200px 400px rgb(145, 157, 249),
+    350px 250px rgb(145, 157, 249),
+    500px 600px rgb(145, 157, 249),
+    700px 150px rgb(145, 157, 249),
+    850px 500px rgb(145, 157, 249),
+    1000px 300px rgb(145, 157, 249),
+    1200px 450px rgb(145, 157, 249),
+    1350px 200px rgb(145, 157, 249),
+    1500px 550px rgb(145, 157, 249);
+}
+
+#stars2 {
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  filter: blur(2px);
+  box-shadow:
+    100px 120px white,
+    200px 400px white,
+    550px 200px white,
+    500px 300px white,
+    280px 320px white;
+  animation: animStar 40s linear infinite;
+}
+#stars2:after {
+  content: " ";
+  position: absolute;
+  top: 1000px;
+  width: 2px;
+  height: 2px;
+  box-shadow:
+    100px 120px rgb(255, 255, 255),
+    200px 400px white,
+    550px 200px rgb(255, 255, 255),
+    500px 300px white,
+    280px 320px white;
+}
+
+@-webkit-keyframes animStar {
+  from {-webkit-transform: translateY(0px); }
+  to {-webkit-transform: translateY(-2000px); }
+}
+@-moz-keyframes animStar {
+  from {-moz-transform: translateY(0px); }
+  to {-moz-transform: translateY(-2000px); }
+}
+@-ms-keyframes animStar {
+  from {-ms-transform: translateY(0px);} 
+  to {-ms-transform: translateY(-2000px); }
+}
+@keyframes animStar {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-2000px); }
 }
 
 
@@ -415,6 +528,17 @@ html, body {
             <div class = "songs_each" onclick="play_song('songs_mp3/Viginti.mp3')">11. Viginti Tires</div>
             </div>
     </div>
+
+    <div class="cover_section">
+		<div class="bg-animation">
+			<div id='stars'></div>
+			<div id='stars2'></div>
+			<div id='stars3'></div>
+			<div id='stars4'></div>
+		</div>
+
+	</div>>
+
 </div>
 
 <!-- bottom section-->
@@ -546,6 +670,7 @@ const songs = [
 
 let currentSongIndex = 0;
 
+/*playing a song on click*/
 function play_song(file) {
     currentSongIndex = songs.indexOf(file);
     player.src = file;
@@ -639,6 +764,8 @@ document.getElementById('progress_bar').addEventListener('input', function() {
         player.currentTime = seekTime;
     }
 });
+
+
 </script>
 
 </body>
