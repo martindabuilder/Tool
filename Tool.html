@@ -130,28 +130,36 @@ html, body {
 @keyframes periodic_logo_glow {
 0% { filter: drop-shadow(0 0 2px #c1e2e6)
         drop-shadow(0 0 3px #9ba3c6)
-        drop-shadow(0 0 4px #7383c1)}
+        drop-shadow(0 0 4px #7383c1)
+    }
 
 50% { filter: drop-shadow(0 0 4px #cddaf5)
         drop-shadow(0 0 5px #8aa7e9)
-        drop-shadow(0 0 4px #4d6ce9)}
+        drop-shadow(0 0 4px #4d6ce9)
+    }
+
 100%{ filter: drop-shadow(0 0 2px #c1e2e6)
         drop-shadow(0 0 3px #9ba3c6)
-        drop-shadow(0 0 4px #7383c1)}
+        drop-shadow(0 0 4px #7383c1)
+    }
 
 }
 /*glow effect on album title*/
 @keyframes periodic_text_glow {
 0% { filter: drop-shadow(0 0 1px #85a4a8)
         drop-shadow(0 0 2px #6c7497)
-        drop-shadow(0 0 3px #5363a1)}
+        drop-shadow(0 0 3px #5363a1)
+    }
 
 50% { filter: drop-shadow(0 0 3px #9ba9c7)
         drop-shadow(0 0 4px #6c83b9)
-        drop-shadow(0 0 3px #5e6eb1)}
+        drop-shadow(0 0 3px #5e6eb1)
+    }
+
 100%{ filter: drop-shadow(0 0 1px #85a4a8)
         drop-shadow(0 0 2px #6c7497)
-        drop-shadow(0 0 3px #5363a1)}
+        drop-shadow(0 0 3px #5363a1)
+    }
 }
 
 
@@ -205,7 +213,7 @@ html, body {
       0deg,
       transparent,
       transparent 30%,
-      rgb(99, 99, 150)
+      rgb(97, 97, 168)
       );
     transform: rotate(-45deg);
     transition: all 0.8s ease;
@@ -215,7 +223,7 @@ html, body {
 }
 .holographiccover:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgb(61, 59, 98);
+    box-shadow: 0 0 20px rgb(79, 94, 152);
 }
 .holographiccover:hover::before {
     opacity: 1;
@@ -247,8 +255,7 @@ html, body {
 .cd_disk img {
     width: 100%;
     height: auto;
-    animation: spin 15s linear infinite;
-    filter: drop-shadow(0 0 5px #566dd6);
+    animation: spin 15s linear infinite, periodic_disk_glow 5s infinite ease-in-out;
 }
 
 .cd_disk.showdisk {
@@ -260,6 +267,26 @@ html, body {
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+@keyframes periodic_disk_glow { 
+    0% { 
+        filter: drop-shadow(0 0 2px #557aa8)
+        drop-shadow(0 0 3px #5175a1)
+        drop-shadow(0 0 4px #5a6fc3)
+    }
+
+    50% { 
+        filter: drop-shadow(0 0 4px #9ba9c7)
+        drop-shadow(0 0 6px #6c83b9)
+        drop-shadow(0 0 4px #5e6eb1)
+    }
+
+    100% {
+        filter: drop-shadow(0 0 2px #557aa8)
+        drop-shadow(0 0 3px #5175a1)
+        drop-shadow(0 0 4px #5a6fc3)
+    }
 }
 
 /*song names*/
@@ -295,12 +322,12 @@ html, body {
     animation: periodic_color_change 3s infinite ease-in-out, transform 1s ease-in-out;
 }
 @keyframes periodic_color_change {
-0% {
-    text-shadow: 0 0 7px #00eaff, 0 0 9px #0033ff, 0 0 11px #0033ff}
-50% {
-    text-shadow: 0 0 14px #cddaf5, 0 0 15px #8aa7e9, 0 0 16px #4d6ce9}
-100%{
-    text-shadow: 0 0 7px #00eaff, 0 0 9px #0033ff, 0 0 11px #0033ff}
+    0% {
+        text-shadow: 0 0 7px #00eaff, 0 0 9px #0033ff, 0 0 11px #0033ff}
+    50% {
+        text-shadow: 0 0 14px #cddaf5, 0 0 15px #8aa7e9, 0 0 16px #4d6ce9}
+    100%{
+        text-shadow: 0 0 7px #00eaff, 0 0 9px #0033ff, 0 0 11px #0033ff}
 }
 
 /*logo and text*/
@@ -396,6 +423,14 @@ html, body {
   height: 100%;
   overflow: hidden;
   background: black;
+
+  -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+
+  mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  mask-repeat: no-repeat;
+  mask-size: cover;
 }
 
 #stars {
@@ -414,7 +449,7 @@ html, body {
     1200px 450px rgb(145, 157, 249),
     1350px 200px rgb(145, 157, 249),
     1500px 550px rgb(145, 157, 249);
-  animation: animStar 40s linear infinite;
+  animation: animStar 30s linear infinite;
 }
 #stars:after {
   content: " ";
@@ -446,7 +481,7 @@ html, body {
     550px 200px white,
     500px 300px white,
     280px 320px white;
-  animation: animStar 40s linear infinite;
+  animation: animStar 30s linear infinite;
 }
 #stars2:after {
   content: " ";
@@ -478,7 +513,6 @@ html, body {
   from { transform: translateY(0px); }
   to { transform: translateY(-2000px); }
 }
-
 
 </style>
 </head>
@@ -536,7 +570,6 @@ html, body {
 			<div id='stars3'></div>
 			<div id='stars4'></div>
 		</div>
-
 	</div>>
 
 </div>
